@@ -5,6 +5,8 @@ class RecipesController < ApplicationController
   end
 
   def create
+    @recipe = Recipe.new
+    @recipe.user_id = current_user.id
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
       redirect_to recipe_path(@recipe), notice: "レシピを投稿しました。"
@@ -36,7 +38,7 @@ class RecipesController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     recipe = Recipe.find(params[:id])
     recipe.destroy
